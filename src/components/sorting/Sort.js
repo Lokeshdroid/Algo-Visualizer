@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style.css";
 
 class Sort extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Sort extends Component {
       next: -1,
       upto: -1,
       size: 100,
-      width: 3,
+      width: 10
     };
     this.handleClick = this.handleClick.bind(this);
     this.animate = this.animate.bind(this);
@@ -34,35 +35,39 @@ class Sort extends Component {
   handleClick(e) {
     this.setState({ disabled: true });
 
-    if(e.target.name === "bubble"){
+    if (e.target.name === "bubble") {
       this.bubbleSort();
-    }else if(e.target.name === "merge"){
+    } else if (e.target.name === "merge") {
       this.mergeSort();
-    }else if(e.target.name === "quick"){
+    } else if (e.target.name === "quick") {
       this.quickSort();
-    }else if(e.target.name === "shuffle"){
+    } else if (e.target.name === "shuffle") {
       this.shuffle();
-      this.setState({ disabled: false });
     }
-    
   }
 
-  handleChange(e){
+  handleChange(e) {
     e.preventDefault();
     let size = e.target.value;
-    this.setState({size: size}, () => {
+    this.setState({ size: size }, () => {
       this.shuffle();
     });
   }
 
-  shuffle(){
+  shuffle() {
     let size = this.state.size,
-      tempArr = [], tempIdxes = [];
-    for (let i = 0; i < size; ++i){
+      tempArr = [],
+      tempIdxes = [];
+    for (let i = 0; i < size; ++i) {
       tempArr.push((Math.floor(Math.random() * 10000) % 500) + 5);
       tempIdxes.push(0);
     }
-    this.setState({ idxes: tempIdxes, arr: tempArr, upto: size, disabled: false });
+    this.setState({
+      idxes: tempIdxes,
+      arr: tempArr,
+      upto: size,
+      disabled: false
+    });
     return;
   }
 
@@ -121,7 +126,7 @@ class Sort extends Component {
       cur: -1,
       next: -1,
       upto: newArr.length,
-      size: newArr.length,
+      size: newArr.length
     };
     this.quickSortUtil(newArr, 0, newArr.length - 1, animations, newState);
     console.log(newArr);
@@ -187,7 +192,7 @@ class Sort extends Component {
       cur: -1,
       next: -1,
       upto: newArr.length,
-      size: newArr.length,
+      size: newArr.length
     };
 
     this.mergeSortUtil(newArr, 0, newArr.length - 1, animations, newState);
@@ -207,7 +212,7 @@ class Sort extends Component {
       cur: -1,
       next: -1,
       upto: newArr.length,
-      size: newArr.length,
+      size: newArr.length
     };
     for (let i = 0; i < this.state.size; ++i) {
       for (let j = 0; j < this.state.size - i - 1; ++j) {
@@ -233,7 +238,7 @@ class Sort extends Component {
     let i = 0;
     let animate = setInterval(() => {
       let temp = JSON.parse(animations[i]);
-      if(!temp.hasOwnProperty("idxes")){
+      if (!temp.hasOwnProperty("idxes")) {
         temp.idxes = this.state.idxes;
       }
       this.setState({
@@ -242,45 +247,88 @@ class Sort extends Component {
         cur: temp.cur,
         next: temp.next,
         upto: temp.upto,
-        size: temp.size,
+        size: temp.size
       });
       ++i;
       if (i === animations.length) {
-        this.setState({ upto: -1, cur: -1, next: -1 });
+        this.setState({ upto: -1, cur: -1, next: -1, disabled: false });
         clearInterval(animate);
       }
     }, 0.1);
   }
 
   render() {
+    let buttonStyle = this.state.disabled ? "disabledButton" : "enabledButton";
+
     // console.log(this.state);
     // if (!this.state.start) {
     return (
       <>
-        <div style={{width: "auto", backgroundColor: "black", boxShadow: "0 8px 6px -6px #3b3b3b", display: "flex", fiex: "row", justifyContent: "space-between"}}>
-          <div style={{padding: "10px", color: "#00cc01", fontSize: "x-large"}}>Sorting Wait!</div>
-          <input disabled={this.state.disabled} type="range" min="50" max="150" value={this.state.size} onChange={this.handleChange}></input>
-          <div style={{padding: "10px"}}>
-            <button style={{marginRight: "10px", backgroundColor: "#00cc01", color: "#1b1b1b", borderRadius: "5px", cursor: "pointer", border: "none", padding: "5px"}} disabled={this.state.disabled} name="bubble" onClick={this.handleClick}>
-              {this.state.disabled ? "Disabled": "BubbleSort"}
+        <div
+          style={{
+            width: "auto",
+            backgroundColor: "black",
+            boxShadow: "0 8px 6px -6px #3b3b3b",
+            display: "flex",
+            fiex: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <div
+            style={{ padding: "10px", color: "#00cc01", fontSize: "x-large" }}
+          >
+            Learn Sorting!
+          </div>
+          <input
+            disabled={this.state.disabled}
+            type="range"
+            min="50"
+            max="80"
+            value={this.state.size}
+            onChange={this.handleChange}
+          ></input>
+          <div style={{ padding: "10px" }}>
+            <button
+              className={buttonStyle}
+              disabled={this.state.disabled}
+              name="bubble"
+              onClick={this.handleClick}
+            >
+              {"BubbleSort"}
             </button>
-            <button style={{marginRight: "10px", backgroundColor: "#00cc01", color: "#1b1b1b", borderRadius: "5px", cursor: "pointer", border: "none", padding: "5px"}} disabled={this.state.disabled} name="merge" onClick={this.handleClick}>
-              {this.state.disabled ?"Disabled" : "MergeSort"}
+            <button
+              className={buttonStyle}
+              disabled={this.state.disabled}
+              name="merge"
+              onClick={this.handleClick}
+              onChange={this.handleChange}
+            >
+              {"MergeSort"}
             </button>
-            <button style={{marginRight: "10px", backgroundColor: "#00cc01", color: "#1b1b1b", borderRadius: "5px", cursor: "pointer", border: "none", padding: "5px"}} disabled={this.state.disabled} name="quick" onClick={this.handleClick}>
-              {this.state.disabled ?"Disabled" : "QuickSort"}
+            <button
+              className={buttonStyle}
+              disabled={this.state.disabled}
+              name="quick"
+              onClick={this.handleClick}
+            >
+              {"QuickSort"}
             </button>
-            <button style={{marginRight: "10px", backgroundColor: "#00ccFF", color: "#1b1b1b", borderRadius: "5px", cursor: "pointer", border: "none", padding: "5px"}} name="shuffle" onClick={this.handleClick}>
-              Reshuffle
+            <button
+              className={buttonStyle}
+              disabled={this.state.disabled}
+              name="shuffle"
+              onClick={this.handleClick}
+            >
+              {"Reshuffle"}
             </button>
           </div>
         </div>
-        {!this.state.start && 
+        {!this.state.start && (
           <div
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: "center"
             }}
           >
             {this.state.arr.map((elem, key) => {
@@ -291,19 +339,19 @@ class Sort extends Component {
                     height: `${elem}px`,
                     width: `${this.state.width}px`,
                     backgroundColor: "purple",
-                    margin: "1px",
+                    margin: "1px"
                   }}
                 ></div>
               );
             })}
           </div>
-        }
-        {this.state.start &&
+        )}
+        {this.state.start && (
           <div
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: "center"
             }}
           >
             {this.state.arr.map((elem, key) => {
@@ -323,13 +371,13 @@ class Sort extends Component {
                         : key > this.state.upto
                         ? "#00cc01"
                         : "purple",
-                    margin: "1px",
+                    margin: "1px"
                   }}
                 ></div>
               );
             })}
           </div>
-        }
+        )}
       </>
     );
   }

@@ -9,21 +9,25 @@ import BreadthFirstSearch from "./components/breadthFirstSearch/breadthFirstSear
 
 import Sort from "./components/sorting/Sort";
 function App() {
-	return (
-		<Router>
-			<Navbar />
-			<div className="App">
-				<Switch>
-					<Route exact strict path="/" component={Home} />
-					<Route exact strict path="/linearsearch" component={LinearSearch} />
-					<Route exact strict path="/binarysearch" component={BinarySearch} />
-					<Route exact strict path="/sorting" component={Sort} />
-					<Route exact strict path="/breadthfirstsearch" component={BreadthFirstSearch} />
-
-				</Switch>
-			</div>
-		</Router>
-	);
+  return (
+    <Router>
+      <Navbar />
+      <div className="App">
+        <Switch>
+          <Route exact strict path="/" component={Home} />
+          <Route exact strict path="/linearsearch" component={LinearSearch} />
+          <Route exact strict path="/binarysearch" component={BinarySearch} />
+          <Route exact strict path="/sorting" component={Sort} />
+          <Route
+            exact
+            strict
+            path="/breadthfirstsearch"
+            component={BreadthFirstSearch}
+          />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
