@@ -6,13 +6,13 @@ function home() {
   return (
     <div className="container">
       <div className="caption">
-        <h1 style={{ fontSize: "3rem", fontWeight: "70" }}> Welcome 👋, </h1>
+        <h1 style={{ fontSize: "3rem", fontWeight: "70" }}> Welcome to Algorithm Visualizer, </h1>
         <h2 style={{ fontSize: "2rem", marginTop: "1.9rem", fontWeight: "50" }}>
           Thanks for visiting my website.{" "}
         </h2>
         <br />
         <h2 style={{ fontSize: "2rem", marginTop: "0.5rem", fontWeight: "50" }}>
-          Choose the Algorithm you want to visualize...{" "}
+          Choose the Algorithm you want to visualize & learn...{" "}
         </h2>
       </div>
       <img src={visual_svg} alt="visualization" className="visualImg" />
